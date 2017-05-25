@@ -1,12 +1,12 @@
 require('whatwg-fetch')
 
 const
-    R = require('ramda'),
     tap = x => { console.log(x); return x },
     React = require('react'),
     ReactDOM = require('react-dom'),
     {createStore} = require('redux'),
-    {Router, Route, browserHistory} = require('react-router'),
+    {BrowserRouter: Router, Route, Link} = require('react-router-dom'),
+    {Provider} = require('react-redux'),
     reducer = (state = '', action) => {
         switch(action.type) {
             case 'ADD_TEXT':
@@ -16,22 +16,22 @@ const
         }
     },
     store = createStore(reducer),
-    /*
-    Root = ({store}) =>
-        <Provider store={store}>
-            <Router>
-                <Route path="/" component={App} />
-            </Router>
-        </Provider>,
-    */
+    Typing = () =>
+        <div>
+            <p>{store.getState()}</p>
+            <input
+                type="text"
+                onChange={({target:{value: text}}) => store.dispatch({type: 'ADD_TEXT', text})}/>
+        </div>,
     render = () =>
         ReactDOM.render(
-            <div>
-                <p>{store.getState()}</p>
-                <input
-                    type="text"
-                    onChange={({target:{value: text}}) => store.dispatch({type: 'ADD_TEXT', text})}/>
-            </div>,
+            <Provider store={store}>
+                <Router>
+                    <div>
+                        <Route path="/" component={Typing}/>
+                    </div>
+                </Router>
+            </Provider>,
             document.getElementById('root'))
 
 store.subscribe(render)
