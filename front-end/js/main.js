@@ -23,14 +23,23 @@ const
                 type="text"
                 onChange={({target:{value: text}}) => store.dispatch({type: 'ADD_TEXT', text})}/>
         </div>,
+    Buttons = () =>
+        <p> put buttons here </p>,
+    Root = () =>
+        <Router>
+            <div>
+                <ul>
+                    <li><Link to="/">Home</Link></li>
+                    <li><Link to="/buttons">Buttons</Link></li>
+                </ul>
+                <Route exact path="/" component={Typing}/>
+                <Route path="/buttons" component={Buttons}/>
+            </div>
+        </Router>,
     render = () =>
         ReactDOM.render(
             <Provider store={store}>
-                <Router>
-                    <div>
-                        <Route path="/" component={Typing}/>
-                    </div>
-                </Router>
+                <Root/>
             </Provider>,
             document.getElementById('root'))
 
