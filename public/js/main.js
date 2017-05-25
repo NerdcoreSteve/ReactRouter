@@ -17,12 +17,14 @@ var tap = function tap(x) {
     _require3 = require('react-redux'),
     Provider = _require3.Provider,
     reducer = function reducer() {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'Blathering Blatherskyte!!';
     var action = arguments[1];
 
     switch (action.type) {
         case 'ADD_TEXT':
             return action.text;
+        case 'BUTTON':
+            return 'You pressed button ' + action.button;
         default:
             return state;
     }
@@ -39,6 +41,7 @@ var tap = function tap(x) {
         ),
         React.createElement('input', {
             type: 'text',
+            value: store.getState(),
             onChange: function onChange(_ref) {
                 var text = _ref.target.value;
                 return store.dispatch({ type: 'ADD_TEXT', text: text });
@@ -47,9 +50,40 @@ var tap = function tap(x) {
 },
     Buttons = function Buttons() {
     return React.createElement(
-        'p',
+        'div',
         null,
-        ' put buttons here '
+        React.createElement(
+            'p',
+            null,
+            store.getState()
+        ),
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick() {
+                    return store.dispatch({ type: 'BUTTON', button: 1 });
+                },
+                type: 'button' },
+            'Button 1'
+        ),
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick() {
+                    return store.dispatch({ type: 'BUTTON', button: 2 });
+                },
+                type: 'button' },
+            'Button 2'
+        ),
+        React.createElement(
+            'button',
+            {
+                onClick: function onClick() {
+                    return store.dispatch({ type: 'BUTTON', button: 3 });
+                },
+                type: 'button' },
+            'Button 3'
+        )
     );
 },
     Root = function Root() {

@@ -7,10 +7,12 @@ const
     {createStore} = require('redux'),
     {BrowserRouter: Router, Route, Link} = require('react-router-dom'),
     {Provider} = require('react-redux'),
-    reducer = (state = '', action) => {
+    reducer = (state = 'Blathering Blatherskyte!!', action) => {
         switch(action.type) {
             case 'ADD_TEXT':
                 return action.text
+            case 'BUTTON':
+                return `You pressed button ${action.button}`
             default:
                 return state
         }
@@ -21,10 +23,28 @@ const
             <p>{store.getState()}</p>
             <input
                 type="text"
+                value={store.getState()}
                 onChange={({target:{value: text}}) => store.dispatch({type: 'ADD_TEXT', text})}/>
         </div>,
     Buttons = () =>
-        <p> put buttons here </p>,
+        <div>
+            <p>{store.getState()}</p>
+            <button
+                onClick={() => store.dispatch({type: 'BUTTON', button: 1})}
+                type="button">
+                    Button 1
+            </button>
+            <button
+                onClick={() => store.dispatch({type: 'BUTTON', button: 2})}
+                type="button">
+                    Button 2
+            </button>
+            <button
+                onClick={() => store.dispatch({type: 'BUTTON', button: 3})}
+                type="button">
+                    Button 3
+            </button>
+        </div>,
     Root = () =>
         <Router>
             <div>
